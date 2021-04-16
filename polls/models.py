@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 QUESTIONS = (
@@ -32,3 +33,17 @@ class Question(models.Model):
     class Meta:
         verbose_name = 'вопрос'
         verbose_name_plural = 'вопросы'
+
+
+class UserAnswer(models.Model):
+    user = models.IntegerField(verbose_name='id пользователя')
+    poll = models.ForeignKey(Poll, verbose_name='Опрос', on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, verbose_name='Вопрос', on_delete=models.CASCADE)
+    answer = models.TextField(verbose_name='Ответ')
+
+    def __str__(self):
+        return f'{self.id}'
+
+    class Meta:
+        verbose_name = 'ответ пользователя'
+        verbose_name_plural = 'ответы пользователей'

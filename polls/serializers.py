@@ -1,6 +1,5 @@
 from rest_framework import serializers
-
-from .models import Poll, Question
+from .models import Poll, Question, UserAnswer
 
 
 class PollSerializer(serializers.ModelSerializer):
@@ -12,10 +11,22 @@ class PollSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Poll
-        fields = ('title', 'start_date', 'end_date', 'description', 'questions')
+        fields = ('title', 'id', 'start_date', 'end_date', 'description', 'questions')
 
 
 class QuestionSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=False)
+
     class Meta:
         model = Question
-        fields = ('poll', 'text', 'type')
+        fields = ('id', 'poll', 'text', 'type')
+
+
+class UserAnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserAnswer
+        fields = ('user', 'poll', 'question', 'answer')
+
+
+class UserAnswerListSerializer(serializers.Serializer):
+    user_id = serializers.IntegerField()
