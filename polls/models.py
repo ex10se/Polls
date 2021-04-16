@@ -13,10 +13,6 @@ class Poll(models.Model):
     end_date = models.DateTimeField(verbose_name='Конец')
     description = models.TextField(verbose_name='Описание')
 
-    @property
-    def questions(self):
-        return Question.objects.filter(poll=self)
-
     def __str__(self):
         return f'{self.id} {self.title}'
 
